@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/create', (res, req) => {
+
+
+router.post('/create', (req, res) => {
 
   data = req.body;
 
