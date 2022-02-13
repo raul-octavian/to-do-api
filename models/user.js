@@ -18,7 +18,7 @@ let userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    min: 6,
+    min: 10,
     max: 255,
   },
   date: {

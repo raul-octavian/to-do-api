@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const todoRoute = require('./routes/todo');
 const userRoute = require('./routes/user');
+const adminRoute = require('./routes/admin');
+const { verifyToken } = require('./validate');
 require('dotenv-flow').config()
 
 
@@ -23,9 +25,11 @@ mongoose.connect(host, {
 
 // mongoose.connection.once('open', () => console.log("connected to the database MongoDB"));
 //base routes
-
-app.use('/api/todo', todoRoute);
 app.use('/api/user', userRoute);
+app.use('/api/todo', adminRoute);
+app.use('/api/todo', verifyToken, todoRoute);
+
+
 
 //server start
 

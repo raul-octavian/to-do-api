@@ -2,12 +2,13 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const user = require('../models/user');
+const sessionStorage = require('node-sessionstorage');
 const { registerValidation, loginValidation } = require('../validate');
+
 
 //register user
 router.post('/register', async (req, res) => {
 
- 
 
   //validate user inputs
   const { error } = registerValidation(req.body);
@@ -62,6 +63,10 @@ router.post('/login', async (req, res) => {
 
   if (!foundUser) {
     return res.status(400).json({ error: "email is wrong" })
+  } else {
+    sessionStorage.setItem('userID', foundUser._id);
+    const USER_ID = sessionStorage.getItem('userID');
+    console.log(USER_ID);
   }
 
   //check for password
@@ -77,8 +82,8 @@ router.post('/login', async (req, res) => {
   const token = jwt.sign(
     //payload
     {
-      name: userFound.name,
-      id: userFound._id
+      name: foundUser.name,
+      id: foundUser._id
     },
 
     //TOKEN_SECRET
@@ -92,7 +97,7 @@ router.post('/login', async (req, res) => {
   res.header("auth-token", token).json({
 
     error: null,
-    data: { token }
+    data: { user_id: foundUser._id, token }
   });
   
 })
