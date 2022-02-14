@@ -62,6 +62,8 @@ components:
         date:
           type: string
 
+
+
 paths:
 
   /user/register:
@@ -87,6 +89,21 @@ paths:
                     type: string
                   data:
                     type: string
+        400: 
+          description: fields are incomplete or did not pass the verifications
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+      
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
   
   /user/login:
     post:
@@ -119,7 +136,21 @@ paths:
                       user_id: 
                         type: string
                         token: string
-      
+        400: 
+          description: email or password wrong
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
   /todo/{user}:
     get:
       summary: get all todos for that user
@@ -142,7 +173,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Todo'
-        
         400:
           description: no results message
           content: 
@@ -158,6 +188,7 @@ paths:
               schema:
                 message: 
                   type : string
+          
   
   /todo/create/{user}:
     post:
