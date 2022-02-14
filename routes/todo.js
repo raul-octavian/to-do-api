@@ -6,9 +6,9 @@ const USER_ID = sessionStorage.getItem('userID');
 console.log(USER_ID);
 
 
-router.get('/', (req, res) => {
+router.get('/:user', (req, res) => {
   
-  todo.find({ user_id: '6207c264064f20d52d21ca2a'})
+  todo.find({ user_id: req.params.user})
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/create', (req, res) => {
+router.post('/create/:user', (req, res) => {
 
   data = req.body;
 
@@ -35,9 +35,10 @@ router.post('/create', (req, res) => {
 
 });
 
-router.get('/todoList', (req, res) => {
+router.get('/todoList/:user', (req, res) => {
 
-  todo.find({ status: 0, user_id: '6207c264064f20d52d21ca2a'})
+  todo.find({
+    status: 0, user_id: req.params.user})
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -50,9 +51,9 @@ router.get('/todoList', (req, res) => {
     })
 });
 
-router.get('/doing', (req, res) => {
+router.get('/doing/:user', (req, res) => {
 
-  todo.find({ status: 1, user_id: '6207c264064f20d52d21ca2a'})
+  todo.find({ status: 1, user_id: req.params.user})
     .then(data => {
       if (data.length) {
         res.send(data); 
@@ -66,9 +67,9 @@ router.get('/doing', (req, res) => {
     })
 });
 
-router.get('/complete', (req, res) => {
+router.get('/complete/:user', (req, res) => {
 
-  todo.find({ status: 2, user_id: '6207c264064f20d52d21ca2a' })
+  todo.find({ status: 2, user_id: req.params.user })
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -81,9 +82,9 @@ router.get('/complete', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:user/:id', (req, res) => {
 
-  todo.findById(req.params.id)
+  todo.find({ user_id: req.params.user, _id: req.params.id })
     .then(data => {
       
       if (data) {
@@ -97,7 +98,7 @@ router.get('/:id', (req, res) => {
     })
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:user/:id', (req, res) => {
   id = req.params.id;
 
   todo.findByIdAndUpdate(id, req.body)
@@ -114,7 +115,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete(':user/:id', (req, res) => {
   id = req.params.id;
 
   todo.findByIdAndDelete(id)
