@@ -12,7 +12,7 @@ let todoSchema = new Schema({
   description: { type: String },
   status: { type: Number, min: 0, max: 2 , default:0},
   deadline: { type: Date, default: new Date(new Date().getTime() + 60 * 60 * 24 * 1000) },
-  timeAllowed: { type: Number, min: 0, max: 1440 }
+  time: { type: Number, min: 0, max: 1440 }
   
 });
 

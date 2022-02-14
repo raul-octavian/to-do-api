@@ -84,7 +84,7 @@ router.get('/complete/:user', (req, res) => {
 
 router.get('/:user/:id', (req, res) => {
 
-  todo.find({ user_id: req.params.user, _id: req.params.id })
+  todo.findById( req.params.id )
     .then(data => {
       
       if (data) {
@@ -106,7 +106,7 @@ router.put('/:user/:id', (req, res) => {
       if (!data) {
         res.status(400).send({message:"cannot find todo with id " + id})
       } else {
-        res.send({message: "todo updated successfully"})
+        res.status(201).send({message: "todo updated successfully"})
       }
 
      })
@@ -123,7 +123,7 @@ router.delete(':user/:id', (req, res) => {
       if (!data) {
         res.status(400).send({ message: "cannot find todo with id " + id })
       } else {
-        res.send({ message: "todo deleted successfully" })
+        res.status(204).send({ message: "todo deleted successfully" })
       }
 
     })

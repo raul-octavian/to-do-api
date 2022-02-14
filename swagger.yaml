@@ -1,0 +1,592 @@
+openapi: 3.0.0
+info: 
+  title: Todo List API
+  description: Simple todo do app, that stores and displays todos.
+  version: 1.0.0
+
+servers: 
+  - url: http://Localhost:4000/api/
+    description: Localhost development server
+
+components: 
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: auth-token
+  
+  schemas:
+    Todo:
+      type: object
+      properties:
+        _id: 
+          type: string
+        title: 
+          type: string
+        user_id: 
+          type: string
+        description:
+          type: string
+        status: 
+          type: integer
+        deadline:
+          type: string
+          format: date-time
+        time: 
+          type: integer
+
+    # User:
+    #   type: object
+    #   properties:
+    #     _id: 
+    #       type: string
+    #     name: 
+    #       type: string
+    #     email:
+    #       type: string
+    #       format: email
+    #     password: 
+    #       type: string
+    #     date: 
+    #       type: string
+
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        date:
+          type: string
+
+paths:
+
+  /user/register:
+    post:
+      summary: register a new user
+      description: register a new user in the database
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+
+      responses: 
+        200: 
+          description: User created successfully
+          content: 
+            application/json:
+              schema:
+                # type: object
+                properties:
+                  error: 
+                    type: string
+                  data:
+                    type: string
+  
+  /user/login:
+    post:
+      summary: login user
+      description: login user and get the JWT token to authenticate, use to populate auth-token field in header
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  type: string
+                password: 
+                  type: string
+    
+      responses: 
+        200:
+          description: User logged in successfully
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email: 
+                    type: string
+                  data: 
+                    type: object
+                      user_id: 
+                        type: string
+                        token: string
+      
+  /todo/{user}:
+    get:
+      summary: get all todos for that user
+      description: retrieves a list of json objects with all todos for that one user
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+  
+  /todo/create/{user}:
+    post:
+      summary: create a new todo
+      description: Create a new todo
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Todo"
+
+      responses:
+        201: 
+          description: Product created successfully
+          content: 
+            application/json:
+              schema: 
+                type : array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        401: 
+          description: access denied
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+
+
+  /todo/todoList/{user}:
+    get:
+      summary: get all unfinished and not started todos for that user, todos with status 0
+      description: retrieves a list of json objects with all todos with status 0 for that one user
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/doing/{user}:
+    get:
+      summary: get all in course todos for that user, todos with status 1
+      description: retrieves a list of json objects with all todos with status 1 for that one user
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/complete/{user}:
+    get:
+      summary: get all completed todos for that user, todos with status 2
+      description: retrieves a list of json objects with all todos with status 2 for that one user
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/{user}/{id}:
+    get:
+      summary: get one specific todo for that user 
+      description: retrieves an object
+      security: 
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Todo"
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+    put:
+      summary: updated a specific todo
+      description: Update a specific todo based on ID
+
+      security: 
+        - ApiKeyAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Todo"
+
+      responses: 
+        201:
+          description: Product updated successfully
+          content: 
+            application/json:
+              schema: 
+                message: 
+                  type: string
+
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+    delete:
+      summary: delete a specific todo
+      description: delete a specific todo based on ID
+
+      security: 
+        - ApiKeyAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+        - in: path
+          name: user
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+
+      responses: 
+        204:
+          description: Product deleted successfully
+          content: 
+            application/json:
+              schema: 
+                message: 
+                  type: string
+
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+        
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/admin/all:
+    get:
+      summary: get all todos for all users
+      description: retrieves a list of json objects with all todos
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/admin/complete:
+    get:
+      summary: get all completed todos for all users
+      description: retrieves a list of json objects with all todos, status 
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/admin/doing:
+    get:
+      summary: get all ongoing todos for all users
+      description: retrieves a list of json objects with all todos, status 1
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+  /todo/admin/todoList:
+    get:
+      summary: get all unfinished todos for all users
+      description: retrieves a list of json objects with all todos, status 0
+      responses:
+        200: 
+          description: A list of JSON object in an array
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        
+        400:
+          description: no results message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+        500:
+          description: error message
+          content: 
+            application/json:
+              schema:
+                message: 
+                  type : string
+
+
+
+
+
+
+
+

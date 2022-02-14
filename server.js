@@ -4,12 +4,21 @@ const todoRoute = require('./routes/todo');
 const userRoute = require('./routes/user');
 const adminRoute = require('./routes/admin');
 const { verifyToken } = require('./validate');
-require('dotenv-flow').config()
+const swaggerUI = require('swagger-ui-express')
+const yaml = require('yamljs');
+require('dotenv-flow').config();
 
 
 const app = express();
 
 app.use(express.json());
+
+
+//swagger implementation
+
+const swaggerDefinition = yaml.load('./swagger.yaml');
+app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDefinition));
+
 
 //env variables
 const port = process.env.PORT || 4000;
