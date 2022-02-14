@@ -34,9 +34,9 @@ mongoose.connect(host, {
 
 // mongoose.connection.once('open', () => console.log("connected to the database MongoDB"));
 //base routes
-app.use('/api/user', userRoute);
-app.use('/api/todo', adminRoute);
-app.use('/api/todo', verifyToken, todoRoute);
+app.use('https://raul-to-do.herokuapp.com/api/user', userRoute);
+app.use('https://raul-to-do.herokuapp.com/api/todo', adminRoute);
+app.use('https://raul-to-do.herokuapp.com/api/todo', verifyToken, todoRoute);
 
 
 
