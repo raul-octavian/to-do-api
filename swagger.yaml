@@ -5,6 +5,9 @@ info:
   version: 1.0.0
 
 servers: 
+  - url: https://raul-to-do.herokuapp.com/api/
+    description: Deployment version
+
   - url: http://Localhost:4000/api/
     description: Localhost development server
 
@@ -68,8 +71,8 @@ paths:
 
   /user/register:
     post:
-      summary: register a new user
-      description: register a new user in the database
+      summary: Register a new user
+      description: Register a new user in the database
       requestBody:
         required: true
         content: 
@@ -90,7 +93,7 @@ paths:
                   data:
                     type: string
         400: 
-          description: fields are incomplete or did not pass the verifications
+          description: Fields are incomplete or did not pass the verifications
           content: 
             application/json:
               schema:
@@ -107,8 +110,8 @@ paths:
   
   /user/login:
     post:
-      summary: login user
-      description: login user and get the JWT token to authenticate, use to populate auth-token field in header
+      summary: Login user
+      description: Login user and get the JWT token to authenticate, use to populate auth-token field in header
       requestBody:
         required: true
         content:
@@ -137,14 +140,14 @@ paths:
                         type: string
                         token: string
         400: 
-          description: email or password wrong
+          description: Email or password wrong
           content: 
             application/json:
               schema:
                 message: 
                   type : string
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -153,8 +156,8 @@ paths:
 
   /todo/{user}:
     get:
-      summary: get all todos for that user
-      description: retrieves a list of json objects with all todos for that one user
+      summary: Get all todos for that user
+      description: Retrieves a list of json objects with all todos for that one user
       security: 
         - ApiKeyAuth: []
       parameters:
@@ -174,7 +177,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Todo'
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -182,7 +185,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -192,7 +195,7 @@ paths:
   
   /todo/create/{user}:
     post:
-      summary: create a new todo
+      summary: Create a new todo
       description: Create a new todo
       security: 
         - ApiKeyAuth: []
@@ -221,14 +224,14 @@ paths:
                 items:
                   $ref: "#/components/schemas/Todo"
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
                 message: 
                   type : string
         401: 
-          description: access denied
+          description: Access denied
           content: 
             application/json:
               schema:
@@ -239,8 +242,8 @@ paths:
 
   /todo/todoList/{user}:
     get:
-      summary: get all unfinished and not started todos for that user, todos with status 0
-      description: retrieves a list of json objects with all todos with status 0 for that one user
+      summary: Get all unfinished and not started todos for that user, todos with status 0
+      description: Retrieves a list of json objects with all todos with status 0 for that one user
       security: 
         - ApiKeyAuth: []
       parameters:
@@ -261,7 +264,7 @@ paths:
                   $ref: "#/components/schemas/Todo"
 
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -269,7 +272,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -278,8 +281,8 @@ paths:
 
   /todo/doing/{user}:
     get:
-      summary: get all in course todos for that user, todos with status 1
-      description: retrieves a list of json objects with all todos with status 1 for that one user
+      summary: Get all in course todos for that user, todos with status 1
+      description: Retrieves a list of json objects with all todos with status 1 for that one user
       security: 
         - ApiKeyAuth: []
       parameters:
@@ -299,14 +302,14 @@ paths:
                 items:
                   $ref: "#/components/schemas/Todo"
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
                 message: 
                   type : string
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -315,8 +318,8 @@ paths:
 
   /todo/complete/{user}:
     get:
-      summary: get all completed todos for that user, todos with status 2
-      description: retrieves a list of json objects with all todos with status 2 for that one user
+      summary: Get all completed todos for that user, todos with status 2
+      description: Retrieves a list of json objects with all todos with status 2 for that one user
       security: 
         - ApiKeyAuth: []
       parameters:
@@ -337,7 +340,7 @@ paths:
                   $ref: "#/components/schemas/Todo"
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -345,7 +348,7 @@ paths:
                   type : string
         
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -354,8 +357,8 @@ paths:
 
   /todo/{user}/{id}:
     get:
-      summary: get one specific todo for that user 
-      description: retrieves an object
+      summary: Get one specific todo for that user 
+      description: Retrieves an object
       security: 
         - ApiKeyAuth: []
       parameters:
@@ -380,7 +383,7 @@ paths:
                 $ref: "#/components/schemas/Todo"
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -388,7 +391,7 @@ paths:
                   type : string
         
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -396,7 +399,7 @@ paths:
                   type : string
 
     put:
-      summary: updated a specific todo
+      summary: Updated a specific todo
       description: Update a specific todo based on ID
 
       security: 
@@ -433,7 +436,7 @@ paths:
                   type: string
 
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -441,7 +444,7 @@ paths:
                   type : string
         
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -449,8 +452,8 @@ paths:
                   type : string
 
     delete:
-      summary: delete a specific todo
-      description: delete a specific todo based on ID
+      summary: Delete a specific todo
+      description: Delete a specific todo based on ID
 
       security: 
         - ApiKeyAuth: []
@@ -479,7 +482,7 @@ paths:
                   type: string
 
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -487,7 +490,7 @@ paths:
                   type : string
         
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -496,8 +499,8 @@ paths:
 
   /todo/admin/all:
     get:
-      summary: get all todos for all users
-      description: retrieves a list of json objects with all todos
+      summary: Get all todos for all users
+      description: Retrieves a list of json objects with all todos
       responses:
         200: 
           description: A list of JSON object in an array
@@ -509,7 +512,7 @@ paths:
                   $ref: "#/components/schemas/Todo"
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -517,7 +520,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -526,8 +529,8 @@ paths:
 
   /todo/admin/complete:
     get:
-      summary: get all completed todos for all users
-      description: retrieves a list of json objects with all todos, status 
+      summary: Get all completed todos for all users
+      description: Retrieves a list of json objects with all todos, status 
       responses:
         200: 
           description: A list of JSON object in an array
@@ -539,7 +542,7 @@ paths:
                   $ref: "#/components/schemas/Todo"
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -547,7 +550,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -556,8 +559,8 @@ paths:
 
   /todo/admin/doing:
     get:
-      summary: get all ongoing todos for all users
-      description: retrieves a list of json objects with all todos, status 1
+      summary: Get all ongoing todos for all users
+      description: Retrieves a list of json objects with all todos, status 1
       responses:
         200: 
           description: A list of JSON object in an array
@@ -569,7 +572,7 @@ paths:
                   $ref: '#/components/schemas/Todo'
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -577,7 +580,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
@@ -586,8 +589,8 @@ paths:
 
   /todo/admin/todoList:
     get:
-      summary: get all unfinished todos for all users
-      description: retrieves a list of json objects with all todos, status 0
+      summary: Get all unfinished todos for all users
+      description: Retrieves a list of json objects with all todos, status 0
       responses:
         200: 
           description: A list of JSON object in an array
@@ -599,7 +602,7 @@ paths:
                   $ref: '#/components/schemas/Todo'
         
         400:
-          description: no results message
+          description: No results message
           content: 
             application/json:
               schema:
@@ -607,7 +610,7 @@ paths:
                   type : string
 
         500:
-          description: error message
+          description: Error message
           content: 
             application/json:
               schema:
