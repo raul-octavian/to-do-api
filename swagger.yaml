@@ -215,7 +215,7 @@ paths:
               $ref: "#/components/schemas/Todo"
 
       responses:
-        201: 
+        200: 
           description: Product created successfully
           content: 
             application/json:
