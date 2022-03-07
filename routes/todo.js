@@ -7,8 +7,8 @@ console.log(USER_ID);
 
 
 router.get('/:user', (req, res) => {
-  
-  todo.find({ user_id: req.params.user})
+
+  todo.find({ user_id: req.params.user })
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -38,7 +38,8 @@ router.post('/create/:user', (req, res) => {
 router.get('/todoList/:user', (req, res) => {
 
   todo.find({
-    status: 0, user_id: req.params.user})
+    status: 0, user_id: req.params.user
+  })
     .then(data => {
       if (data.length) {
         res.send(data);
@@ -53,12 +54,11 @@ router.get('/todoList/:user', (req, res) => {
 
 router.get('/doing/:user', (req, res) => {
 
-  todo.find({ status: 1, user_id: req.params.user})
+  todo.find({ status: 1, user_id: req.params.user })
     .then(data => {
       if (data.length) {
-        res.send(data); 
-      } else 
-      {
+        res.send(data);
+      } else {
         res.status(400).send({ message: "there are no todo items active wright now" })
       }
     })
@@ -84,13 +84,13 @@ router.get('/complete/:user', (req, res) => {
 
 router.get('/:user/:id', (req, res) => {
 
-  todo.findById( req.params.id )
+  todo.findById(req.params.id)
     .then(data => {
-      
+
       if (data) {
         res.send(data);
       } else {
-        res.status(400).send({ message: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct'})
+        res.status(400).send({ message: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct' })
       }
     })
     .catch(err => {
@@ -104,12 +104,12 @@ router.put('/:user/:id', (req, res) => {
   todo.findByIdAndUpdate(id, req.body)
     .then(data => {
       if (!data) {
-        res.status(400).send({message:"cannot find todo with id " + id})
+        res.status(400).send({ message: "cannot find todo with id " + id })
       } else {
-        res.status(201).send({message: "todo updated successfully"})
+        res.status(201).send({ message: "todo updated successfully" })
       }
 
-     })
+    })
     .catch(err => {
       res.status(500).send({ message: "error updating the toto with id: " + id })
     })
@@ -128,7 +128,7 @@ router.delete(':user/:id', (req, res) => {
 
     })
     .catch(err => {
-      res.status(500).send({ message: "error updating the toto with id: " + id + "error: "})
+      res.status(500).send({ message: "error updating the toto with id: " + id + "error: " })
     })
 });
 

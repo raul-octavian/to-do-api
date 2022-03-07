@@ -27,7 +27,7 @@ let todoSchema = new Schema({
 
 });
 
-todoSchema.pre('findByIdAndUpdate', function () {
+todoSchema.pre('findOneAndUpdate', function () {
   const update = this.getUpdate();
   if (update.__v != null) {
     delete update.__v;
