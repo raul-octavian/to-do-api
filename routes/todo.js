@@ -115,7 +115,7 @@ router.put('/:user/:id', (req, res) => {
     })
 });
 
-router.delete(':user/:id', (req, res) => {
+router.delete('/:user/:id', (req, res) => {
   id = req.params.id;
 
   todo.findByIdAndDelete(id)
