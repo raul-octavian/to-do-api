@@ -10,7 +10,7 @@ chai.use(chaiHttp)
 
 describe('User workflow test', () => {
 
-  it('register and login a user, create a todo, modify toto and verify it is in the database, delete todo', (done) => {
+  it('register and login a user, create a todo, modify todo, test for other statuses, and verify it is in the database, delete todo, verify empy database', (done) => {
 
     //register user
     let user = {
@@ -132,20 +132,24 @@ describe('User workflow test', () => {
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         res.body.should.have.property('_id').eql(todoId)
-                                        done()
 
                                         // delete todo
 
                                         chai.request(server)
-                                          .get(`/api/todo/${userId}/${todoId}`)
+                                          .delete(`/api/todo/${userId}/${todoId}`)
                                           .set({ "auth-token": token })
                                           .end((err, res) => {
-                                            res.should.have.status(200);
-                                            res.body.should.be.a('object');
-                                            res.body.should.have.property('_id').eql(todoId)
-                                            done()
+                                            res.should.have.status(204);
 
-                                            // delete todo
+                                            // check database for no return
+                                            chai.request(server)
+                                              .get(`/api/todo/${userId}`)
+                                              .set({ "auth-token": token })
+                                              .end((err, res) => {
+                                                res.should.have.status(400);
+                                                res.body.should.have.property('message').eql('there are no todo items in your list, create some')
+                                                done()
+                                              })
                                           })
                                       })
                                   })
@@ -155,12 +159,6 @@ describe('User workflow test', () => {
                   })
               })
           })
-
-
-
-
-
       })
   })
-
 })
