@@ -4,12 +4,14 @@ const todoRoute = require('./routes/todo');
 const userRoute = require('./routes/user');
 const adminRoute = require('./routes/admin');
 const { verifyToken } = require('./validate');
-const swaggerUI = require('swagger-ui-express')
+const swaggerUI = require('swagger-ui-express');
+const cors = require('cors')
 const yaml = require('yamljs');
 require('dotenv-flow').config();
 
 
 const app = express();
+app.use(cors())
 
 app.use(express.json());
 

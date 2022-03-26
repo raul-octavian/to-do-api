@@ -7,11 +7,12 @@ console.log(USER_ID);
 
 
 router.get('/:user', (req, res) => {
-
+  const user_id = req.params.user
   todo.find({ user_id: req.params.user })
     .then(data => {
       if (data.length) {
-        res.send(data);
+        console.log(data)
+        res.send(mapArray(data, user_id));
       } else {
         res.status(400).send({ message: "there are no todo items in your list, create some" })
       }
@@ -66,43 +67,14 @@ router.get('/status/:status/:user', (req, res) => {
     })
 });
 
-// router.get('/doing/:user', (req, res) => {
-
-//   todo.find({ status: 1, user_id: req.params.user })
-//     .then(data => {
-//       if (data.length) {
-//         res.send(data);
-//       } else {
-//         res.status(400).send({ message: "there are no todo items active wright now" })
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({ message: err.message })
-//     })
-// });
-
-// router.get('/complete/:user', (req, res) => {
-
-//   todo.find({ status: 2, user_id: req.params.user })
-//     .then(data => {
-//       if (data.length) {
-//         res.send(data);
-//       } else {
-//         res.status(400).send({ message: "there are no completed todo items wright now" })
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({ message: err.message })
-//     })
-// });
 
 router.get('/:user/:id', (req, res) => {
-  const user_id = req.params.user
+
   todo.findById(req.params.id)
     .then(data => {
-      console.log('data', data)
+
       if (data) {
-        res.send(mapArray(user_id, data));
+        res.send(data);
       } else {
         res.status(400).send({ message: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct' })
       }
@@ -111,18 +83,6 @@ router.get('/:user/:id', (req, res) => {
       res.status(500).send({ message: err.message })
     })
 });
-
-function mapArray(arr, user_id) {
-  let outputArray = arr.map(item => {
-    return {
-      ...item._doc,
-
-      //links
-      delete: `/api/todo/${user_id}/${item._id}`
-    }
-  })
-  return outputArray;
-}
 
 router.put('/:user/:id', (req, res) => {
   id = req.params.id;
@@ -157,6 +117,17 @@ router.delete('/:user/:id', (req, res) => {
       res.status(500).send({ message: "error updating the toto with id: " + id + "error: " })
     })
 });
+
+function mapArray(arr, user_id) {
+  let outputArray = arr.map(item => {
+    return {
+      ...item._doc,
+      //links
+      uri: `/api/todo/${user_id}/${item._id}`
+    }
+  })
+  return outputArray;
+}
 
 
 
