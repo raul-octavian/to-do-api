@@ -35,10 +35,23 @@ router.post('/create/:user', (req, res) => {
 
 });
 
-router.get('/todoList/:user', (req, res) => {
+router.get('/:status/:user', (req, res) => {
+  const status = req.params.status
+  let state = ''
+  switch (status) {
+    case 'todoList':
+      state = 0;
+      break;
+    case 'doing':
+      state = 1;
+      break;
+    case 'complete':
+      state = 2;
+      break
+  }
 
   todo.find({
-    status: 0, user_id: req.params.user
+    status: state, user_id: req.params.user
   })
     .then(data => {
       if (data.length) {
@@ -52,35 +65,35 @@ router.get('/todoList/:user', (req, res) => {
     })
 });
 
-router.get('/doing/:user', (req, res) => {
+// router.get('/doing/:user', (req, res) => {
 
-  todo.find({ status: 1, user_id: req.params.user })
-    .then(data => {
-      if (data.length) {
-        res.send(data);
-      } else {
-        res.status(400).send({ message: "there are no todo items active wright now" })
-      }
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message })
-    })
-});
+//   todo.find({ status: 1, user_id: req.params.user })
+//     .then(data => {
+//       if (data.length) {
+//         res.send(data);
+//       } else {
+//         res.status(400).send({ message: "there are no todo items active wright now" })
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).send({ message: err.message })
+//     })
+// });
 
-router.get('/complete/:user', (req, res) => {
+// router.get('/complete/:user', (req, res) => {
 
-  todo.find({ status: 2, user_id: req.params.user })
-    .then(data => {
-      if (data.length) {
-        res.send(data);
-      } else {
-        res.status(400).send({ message: "there are no completed todo items wright now" })
-      }
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message })
-    })
-});
+//   todo.find({ status: 2, user_id: req.params.user })
+//     .then(data => {
+//       if (data.length) {
+//         res.send(data);
+//       } else {
+//         res.status(400).send({ message: "there are no completed todo items wright now" })
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).send({ message: err.message })
+//     })
+// });
 
 router.get('/:user/:id', (req, res) => {
 
