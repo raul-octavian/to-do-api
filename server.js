@@ -42,8 +42,8 @@ app.use('/api/todo', verifyToken, todoRoute);
 
 //server start
 
-app.listen(port, function() {
-    console.log('Server is running')
+app.listen(port, function () {
+  console.log('Server is running')
 })
 
 
