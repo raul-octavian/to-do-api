@@ -94,28 +94,28 @@ describe('User workflow test', () => {
 
                         // get unfinished todos, should throw an error
                         chai.request(server)
-                          .get(`/api/todo/todoList/${userId}`)
+                          .get(`/api/todo/status/0/${userId}`)
                           .set({ "auth-token": token })
                           .end((err, res) => {
                             res.should.have.status(400);
                             res.body.should.be.a('object');
-                            res.body.should.have.property('message').eql('there are no unfinished todo items wright now')
+                            res.body.should.have.property('message').eql('there are no results for status: 0')
 
                             // get active todos, should throw an error
 
                             chai.request(server)
-                              .get(`/api/todo/doing/${userId}`)
+                              .get(`/api/todo/status/1/${userId}`)
                               .set({ "auth-token": token })
                               .end((err, res) => {
                                 res.should.have.status(400);
                                 res.body.should.be.a('object');
-                                res.body.should.have.property('message').eql('there are no todo items active wright now')
+                                res.body.should.have.property('message').eql('there are no results for status: 1')
 
 
                                 // get done todos
 
                                 chai.request(server)
-                                  .get(`/api/todo/complete/${userId}`)
+                                  .get(`/api/todo/status/2/${userId}`)
                                   .set({ "auth-token": token })
                                   .end((err, res) => {
                                     res.should.have.status(200);
@@ -129,6 +129,7 @@ describe('User workflow test', () => {
                                       .get(`/api/todo/${userId}/${todoId}`)
                                       .set({ "auth-token": token })
                                       .end((err, res) => {
+                                        // console.log(res)
                                         res.should.have.status(200);
                                         res.body.should.be.a('object');
                                         res.body.should.have.property('_id').eql(todoId)
