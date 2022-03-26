@@ -12,13 +12,13 @@ router.post('/register', async (req, res) => {
 
   //validate user inputs
   const { error } = registerValidation(req.body);
-  
+
   if (error) {
     return res.status(400).json({ error: error.details[0].message })
   }
 
   //email exists
-  
+
   const emailExists = await user.findOne({ email: req.body.email });
 
   if (emailExists) {
@@ -39,7 +39,16 @@ router.post('/register', async (req, res) => {
 
   try {
     const savedUser = await userObj.save();
-    res.status(201).json({ error: null, data: savedUser._id })
+    res.status(201).json({
+      error: null, data: {
+        ...savedUser._doc,
+        getAllUri: `/api/todo/${savedUser._id}`,
+        getAllIncomplete: `/api/todo/status/0/${savedUser._id}`,
+        getAllDoing: `/api/todo/status/1/${savedUser._id}`,
+        getAllComplete: `/api/todo/status/2/${savedUser._id}`,
+        createNew: `/api/todo/create/${savedUser._id}`
+      }
+    })
 
   } catch (err) {
     res.status(400).json({ err })
@@ -66,7 +75,6 @@ router.post('/login', async (req, res) => {
   } else {
     sessionStorage.setItem('userID', foundUser._id);
     const USER_ID = sessionStorage.getItem('userID');
-    console.log(USER_ID);
   }
 
   //check for password
@@ -97,9 +105,17 @@ router.post('/login', async (req, res) => {
   res.header("auth-token", token).json({
 
     error: null,
-    data: { user_id: foundUser._id, token }
+    data: {
+      ...foundUser._doc,
+      getAllUri: `/api/todo/${foundUser._id}`,
+      getAllIncomplete: `/api/todo/status/0/${foundUser._id}`,
+      getAllDoing: `/api/todo/status/1/${foundUser._id}`,
+      getAllComplete: `/api/todo/status/2/${foundUser._id}`,
+      createNew: `/api/todo/create/${foundUser._id}`,
+      token
+    }
   });
-  
+
 })
 
-module.exports =  router ;
+module.exports = router;

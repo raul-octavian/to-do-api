@@ -9,7 +9,7 @@ let todoSchema = new Schema({
     required: true
   },
   user_id: {
-    type: String, required: true
+    type: Schema.Types.ObjectId, required: true
   },
   description: {
     type: String

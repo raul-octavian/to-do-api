@@ -3,7 +3,6 @@ const todo = require('../models/todo');
 const sessionStorage = require('node-sessionstorage');
 
 const USER_ID = sessionStorage.getItem('userID');
-console.log(USER_ID);
 
 
 router.get('/:user', (req, res) => {
@@ -11,7 +10,6 @@ router.get('/:user', (req, res) => {
   todo.find({ user_id: req.params.user })
     .then(data => {
       if (data.length) {
-        console.log(data)
         res.send(mapArray(data, user_id));
       } else {
         res.status(400).send({ message: "there are no todo items in your list, create some" })
