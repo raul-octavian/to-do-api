@@ -240,7 +240,7 @@ paths:
 
 
 
-  /todo/todoList/{user}:
+  /todo/status/0/{user}:
     get:
       summary: Get all unfinished and not started todos for that user, todos with status 0
       description: Retrieves a list of json objects with all todos with status 0 for that one user
@@ -279,7 +279,7 @@ paths:
                 message: 
                   type : string
 
-  /todo/doing/{user}:
+  /todo/status/1/{user}:
     get:
       summary: Get all in course todos for that user, todos with status 1
       description: Retrieves a list of json objects with all todos with status 1 for that one user
@@ -316,7 +316,7 @@ paths:
                 message: 
                   type : string
 
-  /todo/complete/{user}:
+  /todo/status/2/{user}:
     get:
       summary: Get all completed todos for that user, todos with status 2
       description: Retrieves a list of json objects with all todos with status 2 for that one user
