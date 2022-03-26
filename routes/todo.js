@@ -97,12 +97,12 @@ router.get('/status/:status/:user', (req, res) => {
 // });
 
 router.get('/:user/:id', (req, res) => {
-
+  const user_id = req.params.user
   todo.findById(req.params.id)
     .then(data => {
-
+      console.log('data', data)
       if (data) {
-        res.send(data);
+        res.send(mapArray(user_id, data));
       } else {
         res.status(400).send({ message: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct' })
       }
@@ -111,6 +111,18 @@ router.get('/:user/:id', (req, res) => {
       res.status(500).send({ message: err.message })
     })
 });
+
+function mapArray(arr, user_id) {
+  let outputArray = arr.map(item => {
+    return {
+      ...item._doc,
+
+      //links
+      delete: `/api/todo/${user_id}/${item._id}`
+    }
+  })
+  return outputArray;
+}
 
 router.put('/:user/:id', (req, res) => {
   id = req.params.id;
