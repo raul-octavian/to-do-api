@@ -10,7 +10,7 @@ chai.use(chaiHttp)
 
 describe('User workflow test', () => {
 
-  it('register and login a user, create a todo, modify todo, test for other statuses, and verify it is in the database, delete todo, verify empy database', (done) => {
+  it('register and login a user, create a todo, modify todo, test for other statuses, and verify it is in the database, delete todo, verify empty database', (done) => {
 
     //register user
     let user = {
@@ -29,7 +29,7 @@ describe('User workflow test', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(201);
         expect(res.body.error).to.be.eql(null)
-        expect(res.body.data).to.be.a('string');
+        expect(res.body.data).to.be.a('object');
 
 
         //Login the user 
@@ -40,16 +40,16 @@ describe('User workflow test', () => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('error').eql(null);
-            res.body.data.should.have.property('user_id').be.a('string');
+            res.body.data.should.have.property('_id').be.a('string');
             res.body.data.should.have.property('token').be.a('string');
             let token = res.body.data.token;
-            let userId = res.body.data.user_id;
+            let userId = res.body.data._id;
 
             let toDoReqBody = {
               title: "test title",
               description: "party all day long",
               time: 1000,
-              user_id: res.body.data.user_id
+              user_id: res.body.data._id
             };
 
 
