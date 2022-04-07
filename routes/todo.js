@@ -23,8 +23,12 @@ router.get('/:user', (req, res) => {
 router.post('/create/:user', (req, res) => {
 
   data = req.body;
+  user = req.params.user
 
-  todo.insertMany(data)
+  todo.insertMany({
+    ...data,
+    user_id: user
+  })
     .then(data => {
       res.send(data);
     })
