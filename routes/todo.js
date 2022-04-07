@@ -37,19 +37,6 @@ router.post('/create/:user', (req, res) => {
 router.get('/status/:status/:user', (req, res) => {
   const status = req.params.status
   let replay = `there are no results for status: ${+status}`
-  // switch (status) {
-  //   case 0:
-  //     replay = 'there are no unfinished todo items wright now'
-  //     break;
-  //   case 1:
-  //     replay = 'there are no todo items active wright now';
-  //     break;
-  //   case 2:
-  //     replay = 'there are no completed todo items wright now';
-  //     break
-  // }
-  // console.log('replay', replay)
-
   todo.find({
     status: status, user_id: req.params.user
   })

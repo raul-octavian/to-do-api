@@ -1,0 +1,13 @@
+{
+  "name": "todo",
+  "dockerFile": "Dockerfile",
+  "appPort": [4000],
+  "runArgs": ["-u", "node"],
+  "settings": {
+    "workbench.colorTheme": "Visual Studio Dark",
+    "terminal.integrated.shell.linux": "/bin/bash",
+  },
+  "postCreateCommand": "npm install",
+  "extensions": []
+
+}
