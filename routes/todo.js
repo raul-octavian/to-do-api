@@ -98,7 +98,7 @@ router.delete('/:user/:id', (req, res) => {
       if (!data) {
         res.status(400).send({ message: "cannot find todo with id " + id })
       } else {
-        res.status(204).send({ message: "todo deleted successfully" })
+        res.status(201).send({ message: "todo deleted successfully" })
       }
 
     })
