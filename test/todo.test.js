@@ -140,7 +140,7 @@ describe('User workflow test', () => {
                                           .delete(`/api/todo/${userId}/${todoId}`)
                                           .set({ "auth-token": token })
                                           .end((err, res) => {
-                                            res.should.have.status(204);
+                                            res.should.have.status(201);
 
                                             // check database for no return
                                             chai.request(server)
