@@ -6,7 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node server.js",
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --exit"
+    "test": "cross-env NODE_ENV=test mocha --exit",
+    "heroku-restart": "heroku restart",
+    "heroku-login": "heroku login"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,7 @@
     "cross-env": "^7.0.3",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.2",
+    "heroku": "^7.60.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.3.1",
