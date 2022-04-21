@@ -82,8 +82,8 @@ jobs:
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
 
-  deploy:
-    name: Deploy
+  deploy-1:
+    name: Deploy-1
     needs: [test]
     runs-on: ubuntu-latest
 
