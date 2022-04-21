@@ -5,6 +5,10 @@ info:
   version: 1.0.0
 
 servers: 
+
+  - url: https://roa-to-do.herokuapp.com/api
+    description: Main deployment version
+
   - url: https://boiling-brook-48441.herokuapp.com/api
     description: Deployment version
 
