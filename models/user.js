@@ -20,11 +20,10 @@ let userSchema = new Schema({
     required: true,
     min: 10,
     max: 255,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  }
+},
+  {
+    timestamps: true
+  });
 
 module.exports = mongoose.model('user', userSchema);

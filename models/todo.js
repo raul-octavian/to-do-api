@@ -18,7 +18,10 @@ let todoSchema = new Schema({
     type: Number, min: 0, max: 2, default: 0
   }
 
-});
+},
+  {
+    timestamps: true
+  });
 
 todoSchema.pre('findOneAndUpdate', function () {
   const update = this.getUpdate();
