@@ -21,6 +21,8 @@ components:
       type: apiKey
       in: header
       name: auth-token
+
+
   
   schemas:
     Todo:
