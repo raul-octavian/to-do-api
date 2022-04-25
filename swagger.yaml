@@ -36,11 +36,6 @@ components:
           type: string
         status: 
           type: integer
-        deadline:
-          type: string
-          format: date-time
-        time: 
-          type: integer
 
     # User:
     #   type: object
@@ -66,10 +61,6 @@ components:
           type: string
         password:
           type: string
-        date:
-          type: string
-
-
 
 paths:
 
