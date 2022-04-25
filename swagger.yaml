@@ -9,7 +9,7 @@ servers:
   - url: https://roa-to-do.herokuapp.com/api
     description: Main deployment version
 
-  - url: https://boiling-brook-48441.herokuapp.com/api
+  - url: https://roa-dev-to-do-api.herokuapp.com/api
     description: Deployment version
 
   - url: http://Localhost:4000/api
