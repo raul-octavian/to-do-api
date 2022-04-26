@@ -18,7 +18,7 @@ router.get('/:user', (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message })
+      res.status(500).send({ error: err.message })
     })
 });
 
@@ -37,7 +37,7 @@ router.post('/create/:user', (req, res) => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({ message: err.message })
+      res.status(500).send({ error: err.message })
     })
 
 });
@@ -59,7 +59,7 @@ router.get('/status/:status/:user', (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message })
+      res.status(500).send({ error: err.message })
     })
 });
 
@@ -75,11 +75,11 @@ router.get('/:user/:id', (req, res) => {
           uri: `/api/todo/${user_id}/${data._doc._id}`
         });
       } else {
-        res.status(400).send({ message: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct' })
+        res.status(400).send({ error: 'The todo with the id: ' + req.params.id + ' could not be found, make sure the id is correct' })
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message })
+      res.status(500).send({ error: err.message })
     })
 });
 
@@ -91,14 +91,14 @@ router.put('/:user/:id', (req, res) => {
   todo.findByIdAndUpdate(id, req.body)
     .then(data => {
       if (!data) {
-        res.status(400).send({ message: "cannot find todo with id " + id })
+        res.status(400).send({ error: "cannot find todo with id " + id })
       } else {
         res.status(201).send({ message: "todo updated successfully" })
       }
 
     })
     .catch(err => {
-      res.status(500).send({ message: "error updating the toto with id: " + id })
+      res.status(500).send({ error: "error updating the toto with id: " + id })
     })
 });
 
@@ -110,14 +110,14 @@ router.delete('/:user/:id', (req, res) => {
   todo.findByIdAndDelete(id)
     .then(data => {
       if (!data) {
-        res.status(400).send({ message: "cannot find todo with id " + id })
+        res.status(400).send({ error: "cannot find todo with id " + id })
       } else {
         res.status(201).send({ message: "todo deleted successfully" })
       }
 
     })
     .catch(err => {
-      res.status(500).send({ message: "error updating the toto with id: " + id + "error: " })
+      res.status(500).send({ error: "error updating the toto with id: " + id + "error: " })
     })
 });
 
