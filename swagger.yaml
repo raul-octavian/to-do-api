@@ -10,7 +10,7 @@ servers:
     description: Main deployment version
 
   - url: https://roa-dev-to-do-api.herokuapp.com/api
-    description: development version
+    description: development version - and updated
 
   - url: http://Localhost:4000/api
     description: Localhost development server
@@ -21,8 +21,6 @@ components:
       type: apiKey
       in: header
       name: auth-token
-
-
   
   schemas:
     Todo:
