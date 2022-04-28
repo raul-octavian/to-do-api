@@ -6,10 +6,10 @@ info:
 
 servers: 
 
-  - url: https://roa-to-do.herokuapp.com/api
+  - url: https://www.roa-to-do.herokuapp.com/api
     description: Main deployment version
 
-  - url: https://roa-dev-to-do-api.herokuapp.com/api
+  - url: https://www.roa-dev-to-do-api.herokuapp.com/api
     description: development version - and updated
 
   - url: http://Localhost:4000/api
